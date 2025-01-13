@@ -48,3 +48,27 @@ export default tseslint.config({
   },
 })
 ```
+
+How to run BE Api locally -
+
+SETTING UP MONGODB -->
+
+Run the following commands:
+
+docker run --name mongodb -p 27017:27017 -d mongo:latest
+
+Verify container is running: 
+docker ps
+
+Mongo with persistance storage -
+
+docker run --name mongodb -p 27017:27017 -v mongodbdata:/data/db -d mongo:latest
+
+DB sturcture:
+
+DB - User
+Collection: Users
+
+Run project with (first navigate to express-api/package.json) -
+
+sudo npm run dev
