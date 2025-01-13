@@ -6,6 +6,7 @@ export const getUsers = async (req: Request, res: Response) => {
   try {
     const collection: Collection = await connectUsers();
     const users = await collection.find({}).toArray();
+    console.log('Fetching users from database...', users);
     res.status(200).json(users);
   } catch (error: any) {
     console.error('Error fetching users:', error);
