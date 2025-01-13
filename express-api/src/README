@@ -15,3 +15,7 @@ DB sturcture:
 
 DB - User
 Collection: Users
+
+Run project with -
+
+sudo npm run dev
