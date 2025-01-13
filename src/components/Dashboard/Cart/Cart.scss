@@ -1,0 +1,34 @@
+.cart-container {
+    position: relative;
+    margin-left: auto;
+    cursor: pointer;
+
+    .cart-dropdown {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: max-content;
+    }
+
+    .cart-icon {
+        position: absolute;
+        right: 0;
+        height: 1.5em;
+        width: 1.5em;
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            border-radius: 50%;
+            background-color: purple;
+            width: 15px;
+            height: 15px;
+            color: white;
+            font-size: 0.7rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
