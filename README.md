@@ -64,9 +64,9 @@ Mongo with persistance storage -
 
 docker run --name mongodb -p 27017:27017 -v mongodbdata:/data/db -d mongo:latest
 
-DB sturcture:
+DB structure -
 
-DB - User
+DB: User
 Collection: Users
 
 Run project with (first navigate to express-api/package.json) -
