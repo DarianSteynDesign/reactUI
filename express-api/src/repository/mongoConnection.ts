@@ -13,3 +13,11 @@ export async function connectUsers(): Promise<Collection> {
     }
     return client.db("User").collection("Users");
 }
+
+export async function connectPosts(): Promise<Collection> {
+    if (!client) {
+        client = new MongoClient(uri);
+        await client.connect();
+    }
+    return client.db("User").collection("Posts");
+}

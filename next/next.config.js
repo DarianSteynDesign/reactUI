@@ -12,4 +12,16 @@ module.exports = {
       fullUrl: true,
     },
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'placehold.co',
+        port: '',
+        pathname: '/**',
+        search: '',
+      },
+    ],
+    dangerouslyAllowSVG: true
+  }
 };

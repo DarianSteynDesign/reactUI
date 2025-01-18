@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 
 export function SignUp() {
   const signupMutation = useMutation({
-    mutationFn: async (user: any) => {
+    mutationFn: async (user: unknown) => {
       const response = await fetch('http://localhost:5000/api/signup', {
         method: 'POST',
         headers: {
@@ -45,7 +45,7 @@ export function SignUp() {
           try {
             await signupMutation.mutateAsync(values);
           } catch (error) {
-            // Error handling is already done in onError callback
+            console.log(error);
           }
         }}
       >

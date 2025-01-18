@@ -4,9 +4,10 @@ export default function Home() {
     const [message, setMessage] = useState('');
 
     useEffect(() => {
+        const token = localStorage.getItem('authToken');
         async function fetchData() {
             const res = await fetch('http://localhost:5000/api/protected', {
-                headers: { Authorization: `Bearer YOUR_TOKEN_HERE` },
+                headers: {  Authorization: `Bearer ${token}` },
             });
             const data = await res.json();
             setMessage(data.message || 'No message received');

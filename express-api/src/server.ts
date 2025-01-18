@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import { connectUsers } from "./repository/mongoConnection";
 import { getUsers, userAddToCart, userGetCart } from './controllers/users/userController';
 import { login, signup } from './controllers/users/authController';
+import { incrementLike } from "./controllers/users/postController";
 
 //Server init
 const app = express();
@@ -60,6 +61,10 @@ app.get('/api/cart', authenticateToken, userGetCart);
 //PUT
 
 app.put('/api/cart', authenticateToken, userAddToCart);
+
+//PATCH
+
+app.patch('/api/like', incrementLike);
 
 // Start the server ------>
 app.listen(port, () => {
