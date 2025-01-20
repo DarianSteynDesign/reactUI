@@ -15,7 +15,7 @@ const DashboardLayout = ({ children }) => {
     <div className="flex h-screen">
       <aside
         className={`transition-all duration-300 bg-gray-100 h-100 flex flex-col ${
-          isCollapsed ? "w-16" : "w-64"
+          isCollapsed ? "w-20" : "w-64"
         }`}
       >
         <div className="p-4 flex flex-row items-center">
@@ -34,11 +34,11 @@ const DashboardLayout = ({ children }) => {
           </div>
 
           <button
-            onClick={toggleSidebar}
-            className="mb-4 p-2 bg-blue-500 text-white rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400"
-          >
-            {isCollapsed ? "▶" : "◀"}
-          </button>
+          onClick={toggleSidebar}
+          className="mb-4 w-fit mr-auto mt-5 p-2 bg-blue-500 text-white rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+        >
+          {isCollapsed ? "Open" : "Close"}
+        </button>
         </div>
 
         <nav
@@ -67,11 +67,11 @@ const DashboardLayout = ({ children }) => {
         </nav>
 
         <button
-            onClick={toggleTheme}
-            className="p-2 bg-blue-500 text-white rounded-md m-10 mt-auto"
-          >
-            Switch to {theme === 'light' ? 'Dark' : 'Light'} Mode
-          </button>
+          onClick={toggleTheme}
+          className="p-2 bg-blue-500 text-white rounded-md m-10 mt-auto ml-auto mr-auto"
+        >
+          {theme === "light" ? "Dark" : "Light"}
+        </button>
       </aside>
 
       <main className="flex-1 p-4">{children}</main>
