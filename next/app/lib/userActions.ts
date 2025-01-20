@@ -1,10 +1,7 @@
 'use server'
 
-export async function createUser(formData: FormData) {
-  const name = formData.get('name')
-  const surname = formData.get('surname')
-  const email = formData.get('email')
-  const password = formData.get('password')
+export async function createUser(values: SignUpFormValues) {
+  const { name, surname, email, password } = values;
 
   const response = await fetch('http://localhost:5000/api/signup', {
     method: 'POST',
@@ -12,14 +9,15 @@ export async function createUser(formData: FormData) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ name, surname, email, password }),
-  })
+  });
 
   if (!response.ok) {
-    throw new Error('Signup failed')
+    throw new Error('Signup failed');
   }
 
-  return response.json()
+  return response.json();
 }
+
 
 export async function incrementLike(postId: string) {
   const response = await fetch('http://localhost:5000/api/like', {

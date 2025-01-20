@@ -9,7 +9,7 @@ export default function SignUpPage() {
         <meta name="description" content="Create an account on our platform" />
       </Head>
       <div className="signup-page">
-        <h1>Create an Account</h1>
+        <h1 className='text-lg font-semibold text-gray-800 text-center mt-10'>Create an Account</h1>
         <SignUpForm />
       </div>
     </>

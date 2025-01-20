@@ -33,7 +33,6 @@ export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
-    // Check if the user exists
     const collection = await connectUsers();
     const user = await collection.findOne({ email });
 
@@ -41,7 +40,6 @@ export const login = async (req: Request, res: Response) => {
       return res.status(400).json({ message: 'User not found' });
     }
 
-    // Check password validity
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
@@ -58,5 +56,21 @@ export const login = async (req: Request, res: Response) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error logging in user' });
+  }
+};
+
+export const verifyToken = (req: Request, res: Response) => {
+  const token = req.headers['authorization']?.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ message: 'No token provided' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
+
+    res.status(200).json({ valid: true, decoded });
+  } catch (error) {
+    res.status(401).json({ valid: false, message: 'Invalid or expired token' });
   }
 };

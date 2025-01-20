@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { connectUsers } from "./repository/mongoConnection";
 import { getUsers, userAddToCart, userGetCart } from './controllers/users/userController';
-import { login, signup } from './controllers/users/authController';
+import { login, signup, verifyToken } from './controllers/users/authController';
 import { incrementLike } from "./controllers/users/postController";
 
 //Server init
@@ -48,6 +48,8 @@ const authenticateToken = (req: any, res: Response, next: NextFunction) => {
 app.post('/api/signup', signup);
 
 app.post('/api/login', login);
+
+app.post('/api/verify-token', verifyToken);
 
 //GET
 app.get('/api/protected', authenticateToken, (req: any, res: Response) => {

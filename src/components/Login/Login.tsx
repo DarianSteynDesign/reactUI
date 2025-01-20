@@ -8,7 +8,7 @@ import 'toastr/build/toastr.min.css';
 export function Login() {
   //Covered: Post API call / user authentication
   const loginMutation = useMutation({
-    mutationFn: async (user: any) => {
+    mutationFn: async (user: unknown) => {
       const response = await fetch('http://localhost:5000/api/login', {
         method: 'POST',
         headers: {

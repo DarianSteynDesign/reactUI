@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { incrementLike } from '../../app/lib/userActions';
+import React, { useState, useEffect } from "react";
+import { incrementLike } from "../../app/lib/userActions";
 
 interface Post {
   _id: string;
@@ -18,11 +18,11 @@ const Posts: React.FC = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await fetch('/api/posts');
+        const res = await fetch("/api/posts");
         const data = await res.json();
         setPosts(data);
       } catch (error) {
-        console.error('Error fetching posts:', error);
+        console.error("Error fetching posts:", error);
       } finally {
         setLoading(false);
       }
@@ -44,25 +44,38 @@ const Posts: React.FC = () => {
   }
 
   return (
-    <ul>
+    <ul className="space-y-6">
       {posts.map((post) => (
-        <li key={post.id}>
-          <h3>{post.title}</h3>
-          <p>{post.content}</p>
-          <p>Likes: {post.likes}</p>
+        <li
+          key={post.id}
+          className="bg-white shadow-md rounded-lg p-6 border border-gray-200"
+        >
+          <h3 className="text-lg font-semibold text-gray-800">{post.title}</h3>
+          <p className="text-gray-600 mt-2">{post.content}</p>
 
-          <LikeButton 
-            postId={post._id} 
-            initialLikes={post.likes} 
-            onLikeUpdate={updateLikes}
-          />
+          <div className="flex items-center justify-between mt-4">
+            <p className="text-sm text-gray-500">
+              <span className="font-medium text-gray-700">Likes:</span>{" "}
+              {post.likes}
+            </p>
+
+            <LikeButton
+              postId={post._id}
+              initialLikes={post.likes}
+              onLikeUpdate={updateLikes}
+            />
+          </div>
         </li>
       ))}
     </ul>
   );
 };
 
-const LikeButton: React.FC<{ postId: string, initialLikes: number, onLikeUpdate: (postId: string, newLikes: number) => void }> = ({ postId, initialLikes, onLikeUpdate }) => {
+const LikeButton: React.FC<{
+  postId: string;
+  initialLikes: number;
+  onLikeUpdate: (postId: string, newLikes: number) => void;
+}> = ({ postId, initialLikes, onLikeUpdate }) => {
   const [likes, setLikes] = useState(initialLikes);
   const [pending, setPending] = useState(false);
 
@@ -78,15 +91,23 @@ const LikeButton: React.FC<{ postId: string, initialLikes: number, onLikeUpdate:
   };
 
   return (
-    <div>
-      <button onClick={handleLikeClick} disabled={pending}>
-        {pending ? 'Liking...' : 'Like'}
+    <div className="flex items-center space-x-4 mt-2">
+      <button
+        onClick={handleLikeClick}
+        disabled={pending}
+        className={`px-4 py-2 text-white font-semibold rounded-lg shadow-md transition duration-300 ${
+          pending
+            ? "bg-gray-400 cursor-not-allowed"
+            : "bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-1"
+        }`}
+      >
+        {pending ? "Liking..." : "Like"}
       </button>
-      <p>Total Likes: {likes}</p>
+      <p className="text-sm text-gray-500">
+        <span className="font-medium text-gray-700">Total Likes:</span> {likes}
+      </p>
     </div>
   );
 };
-
-
 
 export default Posts;
