@@ -40,6 +40,14 @@ docker run --name mongodb -p 27017:27017 -v mongodbdata:/data/db -d mongo:latest
    ```bash
    sudo npm run dev
    ```
+3. Navigate to the frontend directory:
+   ```bash
+   cd next
+   ```
+4. Start the development server:
+   ```bash
+   sudo npm run dev:next
+   ```
 
 ---
 
