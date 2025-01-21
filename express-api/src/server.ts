@@ -6,12 +6,17 @@ import { connectUsers } from "./repository/mongoConnection";
 import { getUsers, userAddToCart, userGetCart } from './controllers/users/userController';
 import { login, signup, verifyToken } from './controllers/users/authController';
 import { incrementLike } from "./controllers/users/postController";
+import cookieParser from 'cookie-parser';
 
 //Server init
 const app = express();
 const port = 5000;
 
-app.use(cors());
+app.use(cookieParser());
+app.use(cors({
+  origin: 'http://localhost:3001',
+  credentials: true,
+}));
 app.use(express.json());
 app.get('/', (req, res) => {
   res.send('Server running...');
@@ -23,14 +28,12 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-app.use(cors());
-
 //Route & Api Auth Token Check ------>
 const authenticateToken = (req: any, res: Response, next: NextFunction) => {
-  const token = req.header('Authorization')?.split(' ')[1];
-  
+  const token = req.cookies['auth-token'];
+
   if (!token) {
-    return res.status(401).json({ message: 'Access denied, no token provided' });
+      return res.status(401).json({ message: 'Access Denied: No Token Provided' });
   }
 
   try {

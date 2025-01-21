@@ -48,12 +48,12 @@ const Posts: React.FC = () => {
       {posts.map((post) => (
         <li
           key={post.id}
-          className="bg-white shadow-md rounded-lg p-6 border border-gray-200"
+          className="bg-white shadow-md rounded-lg p-3 border border-gray-200"
         >
           <h3 className="text-lg font-semibold text-gray-800">{post.title}</h3>
           <p className="text-gray-600 mt-2">{post.content}</p>
 
-          <div className="flex items-center justify-between mt-4">
+          <div className="flex items-center justify-between mt-2">
             <p className="text-sm text-gray-500">
               <span className="font-medium text-gray-700">Likes:</span>{" "}
               {post.likes}

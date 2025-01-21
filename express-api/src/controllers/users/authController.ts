@@ -32,30 +32,31 @@ export const signup = async (req: Request, res: Response) => {
 export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
-
     const collection = await connectUsers();
     const user = await collection.findOne({ email });
 
-    if (!user) {
-      return res.status(400).json({ message: 'User not found' });
-    }
-
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-
-    if (!isPasswordValid) {
-      return res.status(401).json({ message: 'Invalid password' });
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      return res.status(401).json({ message: 'Invalid credentials' });
     }
 
     const token = jwt.sign(
       { userId: user._id, email: user.email },
-      process.env.JWT_SECRET as string,
+      process.env.JWT_SECRET!,
       { expiresIn: '1h' }
     );
+    console.log(token);
 
-    return res.status(200).json({ message: 'Login successful', token });
+    res.cookie('auth-token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
+      maxAge: 3600 * 1000
+    });
+
+    res.status(200).json({ message: 'Login successful' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error logging in user' });
+    res.status(500).json({ message: 'Error logging in' });
   }
 };
 

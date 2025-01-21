@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useTheme } from "../../context/ThemeContext";
+import Cart from "../../app/ui/Cart";
 
 const DashboardLayout = ({ children }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -18,27 +19,22 @@ const DashboardLayout = ({ children }) => {
           isCollapsed ? "w-20" : "w-64"
         }`}
       >
-        <div className="p-4 flex flex-row items-center">
+        <div className="p-4 flex flex-row items-center m-auto mt-0 mb-0">
           <div
             className={`transition-opacity duration-300 ${
               isCollapsed ? "opacity-0" : "opacity-100"
             }`}
           >
             <Image
-              src="https://placehold.co/150x150"
+              src="https://placehold.co/65x65"
               alt="Picture of the author"
-              width={isCollapsed ? 40 : 150}
-              height={isCollapsed ? 40 : 150}
+              width={isCollapsed ? 40 : 65}
+              height={isCollapsed ? 40 : 65}
               className="rounded-full"
             />
-          </div>
 
-          <button
-          onClick={toggleSidebar}
-          className="mb-4 w-fit mr-auto mt-5 p-2 bg-blue-500 text-white rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400"
-        >
-          {isCollapsed ? "Open" : "Close"}
-        </button>
+            <Cart />
+          </div>
         </div>
 
         <nav
@@ -66,12 +62,22 @@ const DashboardLayout = ({ children }) => {
           </ul>
         </nav>
 
-        <button
-          onClick={toggleTheme}
-          className="p-2 bg-blue-500 text-white rounded-md m-10 mt-auto ml-auto mr-auto"
+        <div
+          className={`flex mt-auto ${isCollapsed ? "flex-col" : "flex-row"}`}
         >
-          {theme === "light" ? "Dark" : "Light"}
-        </button>
+          <button
+            onClick={toggleSidebar}
+            className="p-2 bg-blue-500 text-white rounded-md m-10 mt-auto ml-auto mr-auto"
+          >
+            {isCollapsed ? "Open" : "Close"}
+          </button>
+          <button
+            onClick={toggleTheme}
+            className="p-2 bg-gray-500 text-white rounded-md m-10 mt-auto ml-auto mr-auto"
+          >
+            {theme === "light" ? "Dark" : "Light"}
+          </button>
+        </div>
       </aside>
 
       <main className="flex-1 p-4">{children}</main>
