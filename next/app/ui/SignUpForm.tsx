@@ -1,40 +1,45 @@
-'use client';
+"use client";
 
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import { createUser } from '../lib/userActions';
-import { useState } from 'react';
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { createUser } from "../lib/userActions";
+import { useState } from "react";
+import Link from "next/link";
 
 export default function SignUpForm() {
   const [serverError, setServerError] = useState<string | null>(null);
 
   const initialValues: SignUpFormValues = {
-    name: '',
-    surname: '',
-    email: '',
-    password: '',
+    name: "",
+    surname: "",
+    email: "",
+    password: "",
   };
 
   const validationSchema = Yup.object({
-    name: Yup.string().required('Name is required'),
-    surname: Yup.string().required('Surname is required'),
-    email: Yup.string().email('Invalid email address').required('Email is required'),
-    password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+    name: Yup.string().required("Name is required"),
+    surname: Yup.string().required("Surname is required"),
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email is required"),
+    password: Yup.string()
+      .min(6, "Password must be at least 6 characters")
+      .required("Password is required"),
   });
 
   const handleSubmit = async (values: typeof initialValues) => {
     try {
       await createUser(values);
-      window.location.href = '/login';
+      window.location.href = "/login";
     } catch (error: any) {
-      setServerError(error.message || 'An error occurred. Please try again.');
+      setServerError(error.message || "An error occurred. Please try again.");
     }
   };
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-semibold mb-6 text-center">Sign Up</h2>
-      
+
       {serverError && (
         <div className="text-red-600 bg-red-100 p-3 mb-4 rounded">
           {serverError}
@@ -101,7 +106,6 @@ export default function SignUpForm() {
             />
           </div>
 
-          {/* Password */}
           <div>
             <label htmlFor="password" className="block font-medium mb-1">
               Password
@@ -120,12 +124,21 @@ export default function SignUpForm() {
           </div>
 
           {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
-          >
-            Sign Up
-          </button>
+          <div className="flex space-x-4 m-auto w-fit">
+            <button
+              type="submit"
+              className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
+            >
+              Sign Up
+            </button>
+
+            <Link
+              href="/login"
+              className="bg-green-500 text-white py-2 px-4 rounded-md shadow hover:bg-green-600 transition-colors"
+            >
+              Login
+            </Link>
+          </div>
         </Form>
       </Formik>
     </div>
