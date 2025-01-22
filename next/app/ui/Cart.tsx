@@ -40,7 +40,7 @@ const Cart: React.FC = () => {
   if (status === "failed") return <div>Error: {error}</div>;
 
   return (
-    <div className="relative">
+    <div className="relative -top-16 -right-12">
       <div
         className="flex items-center space-x-2 cursor-pointer text-gray-700 hover:text-gray-900"
         onClick={() => setDropdownOpen((prev) => !prev)}
