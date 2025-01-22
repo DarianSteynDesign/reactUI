@@ -48,6 +48,11 @@ docker run --name mongodb -p 27017:27017 -v mongodbdata:/data/db -d mongo:latest
    ```bash
    sudo npm run dev:next
    ```
+5. Check ports are correct
+   ```
+   Express - http://localhost:5000
+   Next - http://localhost:3001
+   ```
 
 ---
 
