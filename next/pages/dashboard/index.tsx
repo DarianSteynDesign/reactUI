@@ -1,36 +1,8 @@
 import { Products } from '../../app/ui/Products';
 import DashboardLayout from '../components/DashboardLayout';
 import Posts from '../components/Posts';
-//import { useEffect } from 'react';
-//import router from 'next/router';
 
 export default function DashboardPage() {
-
-  //Client Side Auth Check
-  // useEffect(() => {
-  //   const token = localStorage.getItem('authToken');
-
-  //   if (!token) {
-  //     router.push('/login');
-  //   } else {
-  //     fetch('/api/verify-token', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Authorization': `Bearer ${token}`,
-  //       },
-  //     })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       if (data.valid === false) {
-  //         router.push('/login');
-  //       }
-  //     })
-  //     .catch(() => {
-  //       router.push('/login');
-  //     });
-  //   }
-  // }, [router]);
-  
   return (
     <DashboardLayout>
       <h1 className='text-lg font-semibold text-gray-800'>Dashboard Home</h1>
