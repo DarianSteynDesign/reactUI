@@ -1,6 +1,6 @@
 import { Products } from '../../app/ui/Products';
-import DashboardLayout from '../components/DashboardLayout';
-import Posts from '../components/Posts';
+import DashboardLayout from './DashboardLayout';
+import Posts from '../../app/ui/Posts';
 
 export default function DashboardPage() {
   return (

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import Proton from "../../app/ui/Proton/Proton";
-import DashboardLayout from "../components/DashboardLayout";
+import DashboardLayout from "./DashboardLayout";
 
 export default function DashboardSubPage() {
   const protonRef = useRef<any>(null);
