@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { incrementLike } from "../../app/lib/userActions";
+import { incrementLike } from "../lib/userActions";
 
 interface Post {
   _id: string;
