@@ -1,30 +1,48 @@
 import { useRef } from "react";
 import Proton from "../../app/ui/Proton/Proton";
 import DashboardLayout from "./DashboardLayout";
+import {
+  clearBubble,
+  moveToAnchor,
+  moveToGridCell,
+  setTalking,
+} from "../../app/store/slices/protonSlice";
+import { useDispatch } from "react-redux";
 
 export default function DashboardSubPage() {
-  const protonRef = useRef<any>(null);
+  const dispatch = useDispatch();
+
+  const handleMove = (row: number, col: number) => {
+    const position = moveToGridCell(row, col);
+    if (position) {
+      dispatch(moveToAnchor(position));
+    }
+  };
+
+  const handleProtonTalk = (message: string) => {
+    dispatch(setTalking(message));
+  };
+
+  const handleClearTalk = () => {
+    dispatch(clearBubble());
+  };
 
   return (
     <DashboardLayout>
       <h1>Subpage</h1>
       <p>This is a subpage within the dashboard.</p>
 
-      <button onClick={() => protonRef.current?.moveToAnchor("left")} className="w-100 px-4 py-2 text-white bg-blue-600 rounded-md mr-10">
-        Move Proton to Bottom Left
-      </button>
-      <button onClick={() => protonRef.current?.moveToAnchor("right")} className="w-100 px-4 py-2 text-white bg-blue-600 rounded-md mr-10">
-        Move Proton to Bottom Right
-      </button>
-      <button onClick={() => protonRef.current?.showBubble("Welcome to my site!")} className="w-100 px-4 py-2 text-white bg-blue-600 rounded-md">
-        Show Welcome Message
-      </button>
-
-      <Proton ref={protonRef} />
-
-      <div className="h-full flex">
-        <div id="left" className="relative w-10 h-10 mr-auto mt-auto bg-gray-800"></div>
-        <div id="right" className="relative w-10 h-10 ml-auto mt-auto bg-gray-800"></div>
+      <div>
+        <button className="w-120 px-4 py-2 text-white bg-blue-600 rounded-md mr-5" onClick={() => handleMove(5, 5)}>Move to grid-5-5</button>
+        <button className="w-120 px-4 py-2 text-white bg-blue-600 rounded-md mr-5" onClick={() => handleMove(3, 3)}>Move to grid-3-3</button>
+        <button className="w-120 px-4 py-2 text-white bg-blue-600 rounded-md mr-5" onClick={() => handleMove(1, 1)}>Move to grid-1-1</button>
+        <button className="w-120 px-4 py-2 text-white bg-blue-600 rounded-md mr-5" onClick={() => handleMove(1, 5)}>Move to grid-1-5</button>
+        <button className="w-120 px-4 py-2 text-white bg-blue-600 rounded-md mr-5" onClick={() => handleProtonTalk("Hello, I am Proton!")}>
+          Make Proton Talk
+        </button>
+        <button className="w-120 px-4 py-2 text-white bg-blue-600 rounded-md mr-5" onClick={() => handleClearTalk()}>
+          Make Proton quiet
+        </button>
       </div>
     </DashboardLayout>
   );

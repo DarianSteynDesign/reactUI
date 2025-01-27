@@ -8,41 +8,55 @@
 
     .eye {
         position: absolute;
-        top: 10px;
-        background-color: white;
+        top: 20px;
+        background-color: #1d4ed8;
         width: 10px;
-        height: 10px;
+        height: 13px;
         border-radius: 50%;
     }
 
     .looking {
         animation: look-around 3s ease-in-out;
-      }
+    }
 
     .left {
-        left: 10px;
+        left: 15px;
     }
 
     .right {
-        right: 10px;
+        right: 15px;
     }
 }
 
 .proton {
-    width: 50px;
-    height: 50px;
-    background-color: #4745FF;
+    width: 70px;
+    height: 70px;
+    background-color: #ffffff;
     border-radius: 50%;
     position: relative;
+}
+
+.speech-bubble {
+    background-color: transparent;
+    border-bottom: 1px solid #fff;
+    padding: 10px;
+    width: fit-content;
+    font-size: 14px;
+    text-align: center;
+    animation: fadeIn 0.3s ease-out;
+    margin-bottom: 20px;
+    color: #fff;
+    max-width: 300px;
+    text-align: left;
 }
 
 .orbiting-circle {
     width: 15px;
     height: 15px;
-    background-color: #4745FF;
+    background-color: #ffffff;
     border-radius: 50%;
     position: absolute;
-    top: 40%;
+    top: 30%;
     left: 40%;
     transform: translate(-50%, -50%);
     animation: orbit 4s linear infinite;
@@ -62,21 +76,29 @@
     height: 5px;
 }
 
-
-.speech-bubble {
-    background-color: white;
-    border: 2px solid #4745FF;
-    border-radius: 12px;
-    padding: 10px;
+.menu {
     position: absolute;
-    top: -90px;
-    left: 45px;
-    max-width: 200px;
-    font-size: 14px;
-    text-align: center;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    animation: fadeIn 0.3s ease-out;
-}
+    top: 60px;
+    left: -50px;
+    background: white;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+  
+  .menu h3 {
+    margin-top: 0;
+  }
+  
+  .menu select {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
 
 //Animations
 

@@ -1,73 +1,94 @@
-import React, { useState, useImperativeHandle, forwardRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+import { AnimatePresence } from "framer-motion";
 import styles from "./Proton.module.scss";
+import { toggleMenu } from "../../store/slices/protonSlice";
+import { RootState } from "../../store/store";
+import ChatBox from "./ChatBox";
+import { useRouter } from "next/router";
 
-export interface ProtonProps {
-  initialPosition?: { x: number; y: number };
-}
+const Proton = () => {
+  //const [showMenu, setShowMenu] = useState(false);
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const { position, state, bubbleText, route, showMenu } = useSelector(
+    (state: RootState) => state.proton
+  );
+  const routes = [
+    { name: "Home", path: "/" },
+    { name: "Sign Up", path: "/signup" },
+    { name: "Login", path: "/login" },
+    { name: "Dashboard", path: "/dashboard" },
+  ];
 
-export interface ProtonRef {
-  moveToAnchor: (anchorId: string) => void;
-  showBubble: (text: string) => void;
-}
-
-const Proton = forwardRef<ProtonRef, ProtonProps>(({ initialPosition = { x: 150, y: 150 } }, ref) => {
-  const [position, setPosition] = useState(initialPosition);
-  const [bubbleText, setBubbleText] = useState<string | null>(null);
-  const [isLooking, setIsLooking] = useState(false);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsLooking(true);
-      setTimeout(() => setIsLooking(false), 5000);
-    }, 10000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useImperativeHandle(ref, () => ({
-    moveToAnchor(anchorId: string) {
-      const anchor = document.getElementById(anchorId);
-      if (anchor) {
-        const rect = anchor.getBoundingClientRect();
-        setPosition({
-          x: rect.left + window.scrollX + rect.width / 2,
-          y: rect.top + window.scrollY + rect.height / 2,
-        });
-      }
-    },
-    showBubble(text: string) {
-      setBubbleText(text);
-      setTimeout(() => setBubbleText(null), 3000);
-    },
-  }));
+  const handleMenuToggle = () => {
+    dispatch(toggleMenu());
+  };
 
   return (
-<div className={styles["proton-container"]} style={{ left: position.x, top: position.y }}>
-  {/* Proton */}
-  <div className={styles.proton}>
-  <div className={`${styles.eye} ${styles.left} ${isLooking ? styles["looking"] : ""}`}></div>
-  <div className={`${styles.eye} ${styles.right} ${isLooking ? styles["looking"] : ""}`}></div>
-  <div className={styles["orbiting-circle"]} style={{ animationDuration: "3s" }}></div>
-  <div className={styles["orbiting-circle"]} style={{ animationDuration: "5s" }}></div>
-  <div className={styles["orbiting-circle"]} style={{ animationDuration: "7s" }}></div>
-</div>
+    <div
+      className={styles["proton-container"]}
+      style={{
+        left: position.x,
+        top: position.y,
+        position: "absolute",
+        transition: "left 0.5s ease, top 0.5s ease",
+      }}
+    >
+      <AnimatePresence>
+        {bubbleText && <ChatBox text={bubbleText} route={route ?? undefined} />}
+      </AnimatePresence>
 
+      {/* Proton */}
+      <div className={styles.proton} onClick={handleMenuToggle}>
+        {/* Eyes */}
+        <div
+          className={`${styles.eye} ${styles.left} ${
+            state === "idle" ? styles["looking"] : ""
+          }`}
+        ></div>
+        <div
+          className={`${styles.eye} ${styles.right} ${
+            state === "idle" ? styles["looking"] : ""
+          }`}
+        ></div>
 
-  {/* Speech Bubble */}
-  <AnimatePresence>
-    {bubbleText && (
-      <motion.div
-        className={styles["speech-bubble"]}
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.8 }}
-      >
-        {bubbleText}
-      </motion.div>
-    )}
-  </AnimatePresence>
-</div>
+        {/* Orbiting Circles */}
+        <div
+          className={styles["orbiting-circle"]}
+          style={{ animationDuration: "3s" }}
+        ></div>
+        <div
+          className={styles["orbiting-circle"]}
+          style={{ animationDuration: "5s" }}
+        ></div>
+        <div
+          className={styles["orbiting-circle"]}
+          style={{ animationDuration: "10s" }}
+        ></div>
+      </div>
+
+      {showMenu && (
+        <div className="absolute bg-white shadow-lg rounded-lg p-4 mt-2 w-48">
+          {/* Routes Menu */}
+          <div>
+            <ul className="mt-2 space-y-2">
+              {routes.map((route) => (
+                <li
+                  key={route.path}
+                  className="cursor-pointer text-blue-600 hover:text-blue-800"
+                  onClick={() => router.push(route.path)}
+                >
+                  {route.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
+    </div>
   );
-});
+};
 
 export default Proton;
