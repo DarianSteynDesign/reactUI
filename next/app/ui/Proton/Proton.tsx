@@ -7,9 +7,11 @@ import { toggleMenu } from "../../store/slices/protonSlice";
 import { RootState } from "../../store/store";
 import ChatBox from "./ChatBox";
 import { useRouter } from "next/router";
+import Cart from "../Cart";
+import ThemeButton from "../ThemeButton/ThemeButton";
+import { useTheme } from "../../../context/ThemeContext";
 
 const Proton = () => {
-  //const [showMenu, setShowMenu] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
   const { position, state, bubbleText, route, showMenu } = useSelector(
@@ -26,6 +28,8 @@ const Proton = () => {
     dispatch(toggleMenu());
   };
 
+  const { theme, changeTheme } = useTheme();
+
   return (
     <div
       className={styles["proton-container"]}
@@ -40,15 +44,23 @@ const Proton = () => {
         {bubbleText && <ChatBox text={bubbleText} route={route ?? undefined} />}
       </AnimatePresence>
 
+      {showMenu && router.pathname == "/products" && <Cart />}
+
+      {showMenu && router.pathname == "/dashboard" && (
+        <ThemeButton onThemeChange={changeTheme} />
+      )}
+
       {/* Proton */}
       <div className={styles.proton} onClick={handleMenuToggle}>
         {/* Eyes */}
         <div
+          style={{ background: theme.primary, color: theme.secondary }}
           className={`${styles.eye} ${styles.left} ${
             state === "idle" ? styles["looking"] : ""
           }`}
         ></div>
         <div
+          style={{ background: theme.primary, color: theme.secondary }}
           className={`${styles.eye} ${styles.right} ${
             state === "idle" ? styles["looking"] : ""
           }`}

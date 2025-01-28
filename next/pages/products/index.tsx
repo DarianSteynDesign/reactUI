@@ -38,8 +38,6 @@ interface ProductsProps {
 }
 
 const Products = ({ products }: ProductsProps) => {
-  console.log("products:", products);
-
   return (
     <div className="max-w-3xl mx-auto p-4">
       <h3 className="text-xl font-semibold mb-4">Items to Buy</h3>

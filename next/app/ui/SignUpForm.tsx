@@ -37,9 +37,7 @@ export default function SignUpForm() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-semibold mb-6 text-center">Sign Up</h2>
-
+    <div className="max-w-md mx-auto mt-10 p-6 rounded-lg">
       {serverError && (
         <div className="text-red-600 bg-red-100 p-3 mb-4 rounded">
           {serverError}
@@ -54,14 +52,14 @@ export default function SignUpForm() {
         <Form className="space-y-4">
           {/* Name */}
           <div>
-            <label htmlFor="name" className="block font-medium mb-1">
+            <label htmlFor="name" className="block font-medium mb-1 text-white">
               Name
             </label>
             <Field
               type="text"
               name="name"
               id="name"
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full p-2 border-b-2 bg-transparent focus:outline-none"
             />
             <ErrorMessage
               name="name"
@@ -72,14 +70,14 @@ export default function SignUpForm() {
 
           {/* Surname */}
           <div>
-            <label htmlFor="surname" className="block font-medium mb-1">
+            <label htmlFor="surname" className="block font-medium mb-1 text-white">
               Surname
             </label>
             <Field
               type="text"
               name="surname"
               id="surname"
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full p-2 border-b-2 bg-transparent focus:outline-none"
             />
             <ErrorMessage
               name="surname"
@@ -90,14 +88,14 @@ export default function SignUpForm() {
 
           {/* Email */}
           <div>
-            <label htmlFor="email" className="block font-medium mb-1">
+            <label htmlFor="email" className="block font-medium mb-1 text-white">
               Email
             </label>
             <Field
               type="email"
               name="email"
               id="email"
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full p-2 border-b-2 bg-transparent focus:outline-none"
             />
             <ErrorMessage
               name="email"
@@ -107,14 +105,14 @@ export default function SignUpForm() {
           </div>
 
           <div>
-            <label htmlFor="password" className="block font-medium mb-1">
+            <label htmlFor="password" className="block font-medium mb-1 text-white">
               Password
             </label>
             <Field
               type="password"
               name="password"
               id="password"
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full p-2 border-b-2 bg-transparent focus:outline-none"
             />
             <ErrorMessage
               name="password"
@@ -127,14 +125,14 @@ export default function SignUpForm() {
           <div className="flex space-x-4 m-auto w-fit">
             <button
               type="submit"
-              className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
+              className="bg-white text-blue-700 py-2 px-4 rounded-full hover:bg-blue-500 hover:text-white transition-colors"
             >
               Sign Up
             </button>
 
             <Link
               href="/login"
-              className="bg-green-500 text-white py-2 px-4 rounded-md shadow hover:bg-green-600 transition-colors"
+              className="bg-white text-blue-700 py-2 px-4 rounded-full shadow hover:bg-blue-500 hover:text-white transition-colors"
             >
               Login
             </Link>
