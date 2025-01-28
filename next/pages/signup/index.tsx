@@ -10,24 +10,24 @@ export default function SignUpPage() {
     delay: 5000,
   };
   const illBeHere = {
-    text: "I'll be up here if you need anything.",
+    text: "I'll be here if you need anything.",
     delay: 5000,
   };
 
   useMessageFlow([
     { text: signUpText.text, position: [5, 4], delayTime: 5000 },
-    { text: illBeHere.text, position: [1, 1], delayTime: 3000, clearAfterDelay: true },
+    { text: illBeHere.text, position: [4, 4], delayTime: 3000, clearAfterDelay: true },
   ]);
 
   return (
-    <div className="flex flex-col min-h-screen bg-blue-700">
+    <div className="flex flex-col min-h-screen">
       <Head>
         <title>Sign Up</title>
         <meta name="description" content="Create an account on our platform" />
       </Head>
       <div className="signup-page">
-        <h1 className="text-lg font-semibold text-gray-800 text-center mt-10">
-          Create an Account
+        <h1 className="text-3xl text-left font-semibold text-white mt-10 ml-10">
+          Sign Up
         </h1>
         <SignUpForm />
       </div>

@@ -1,43 +1,29 @@
-import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
+import { createContext, useContext, useState, ReactNode } from "react";
 
-type Theme = 'light' | 'dark';
+const ThemeContext = createContext<any>(null);
 
-interface ThemeContextType {
-  theme: Theme;
-  toggleTheme: () => void;
-}
+export const ThemeProvider = ({ children }: { children: ReactNode }) => {
+  const [theme, setTheme] = useState({ primary: "#4745ff", secondary: "#6b69f6" });
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
-
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-  return context;
-};
-
-interface ThemeProviderProps {
-  children: ReactNode;
-}
-
-export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const [theme, setTheme] = useState<Theme>('light');
-
-  const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+  const changeTheme = (themeName: string) => {
+    switch (themeName) {
+      case "Red":
+        setTheme({ primary: "#cb2e2e", secondary: "#f66969" });
+        break;
+      case "Green":
+        setTheme({ primary: "#0ace79", secondary: "#1c744e" });
+        break;
+      default:
+        setTheme({ primary: "#4745ff", secondary: "#6b69f6" });
+        break;
+    }
   };
 
-  // Effect to apply the theme to the body class
-  useEffect(() => {
-    // Ensure body class reflects the current theme
-    document.body.classList.remove('light', 'dark');
-    document.body.classList.add(theme);
-  }, [theme]);
-
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, changeTheme }}>
       {children}
     </ThemeContext.Provider>
   );
 };
+
+export const useTheme = () => useContext(ThemeContext);
