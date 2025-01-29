@@ -1,11 +1,8 @@
-import { Products } from "../../app/ui/Products";
 import DashboardLayout from "./DashboardLayout";
-import Posts from "../../app/ui/Posts";
 import { useMessageFlow } from "../../app/hooks/useMessageFlow";
 import { GetStaticProps } from "next";
 import Chart from "./Charts";
 import { useEffect, useState } from "react";
-import { setOptions } from "react-chartjs-2/dist/utils";
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
@@ -71,8 +68,20 @@ const DashboardPage = ({ playerData }: { playerData: PlayerData }) => {
   };
 
   useMessageFlow([
-    { text: theDashboard.text, position: [3, 1], delayTime: theDashboard.delay },
-    { text: switchTheme.text, position: [3, 1], delayTime: switchTheme.delay, clearAfterDelay: true, shouldTriggerIdle: true }
+    {
+      text: theDashboard.text,
+      position: [2, 5],
+      delayTime: theDashboard.delay,
+      chatBubblePostion: { x: -100, y: -100 },
+    },
+    {
+      text: switchTheme.text,
+      position: [2, 5],
+      delayTime: switchTheme.delay,
+      clearAfterDelay: true,
+      shouldTriggerIdle: true,
+      chatBubblePostion: { x: -100, y: -100 },
+    },
   ]);
 
   const colors = [
@@ -171,8 +180,8 @@ const DashboardPage = ({ playerData }: { playerData: PlayerData }) => {
   return (
     <DashboardLayout>
       <div>
-        <h1 className="text-lg font-semibold text-gray-800">Dashboard Home</h1>
-        <p className="text-gray-600 mt-2 mb-5">Welcome to the dashboard!</p>
+        <h1 className="text-lg font-semibold text-white">Dashboard Home</h1>
+        <p className="text-white mt-2 mb-5">Welcome to the dashboard!</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Points per Season */}

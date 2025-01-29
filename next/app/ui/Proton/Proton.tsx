@@ -14,7 +14,7 @@ import { useTheme } from "../../../context/ThemeContext";
 const Proton = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { position, state, bubbleText, route, showMenu } = useSelector(
+  const { position, state, bubbleText, routeTo, showMenu } = useSelector(
     (state: RootState) => state.proton
   );
   const routes = [
@@ -22,6 +22,7 @@ const Proton = () => {
     { name: "Sign Up", path: "/signup" },
     { name: "Login", path: "/login" },
     { name: "Dashboard", path: "/dashboard" },
+    { name: "Products", path: "/products" },
   ];
 
   const handleMenuToggle = () => {
@@ -41,7 +42,7 @@ const Proton = () => {
       }}
     >
       <AnimatePresence>
-        {bubbleText && <ChatBox text={bubbleText} route={route ?? undefined} />}
+        {bubbleText && <ChatBox text={bubbleText} route={routeTo ?? undefined} />}
       </AnimatePresence>
 
       {showMenu && router.pathname == "/products" && <Cart />}

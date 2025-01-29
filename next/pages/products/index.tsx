@@ -1,36 +1,36 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { GetStaticProps } from "next";
+import { useMessageFlow } from "../../app/hooks/useMessageFlow";
+import { ProductComponent } from "./Products";
+import FilterComponent from "./FilterComponent";
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products`);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/products`
+    );
     if (!response.ok) {
-      throw new Error('Failed to fetch products');
+      throw new Error("Failed to fetch products");
     }
     const products = await response.json();
-    console.log("products2:", products);
 
     return {
-      props: {
-        products,
-      },
+      props: { products },
       revalidate: 60,
     };
   } catch (error) {
-    console.error('Error fetching products:', error);
-    return {
-      props: {
-        products: [],
-      },
-    };
+    console.error("Error fetching products:", error);
+    return { props: { products: [] } };
   }
 };
 
 interface Product {
   id: string;
   name: string;
-  quantity: number;
+  type: string;
   price: number;
+  rating: number;
+  image: string;
 }
 
 interface ProductsProps {
@@ -38,25 +38,44 @@ interface ProductsProps {
 }
 
 const Products = ({ products }: ProductsProps) => {
+  const [filters, setFilters] = useState<{ price?: number; rating?: number; type?: string }>({});
+
+  // Apply filters
+  const filteredProducts = products.filter((product) => {
+    console.log(product.type, filters.type);
+    return (
+      (filters.type === undefined || filters.type === "" || product.type === filters.type) &&
+      (filters.price === undefined || product.price <= filters.price) &&
+      (filters.rating === undefined || product.rating >= filters.rating)
+    );
+  });
+
+  const messageFlow = useMemo(() => [
+    {
+      text: "Ok you've made it to the products page, you can click on me to see the products you have added to the cart.",
+      position: [2, 5] as [number, number],
+      delayTime: 7000,
+      chatBubblePostion: { x: -100, y: -100 }
+    },
+    {
+      text: "I'll be here if you need anything",
+      position: [2, 1] as [number, number],
+      delayTime: 4000,
+      clearAfterDelay: true,
+    },
+  ], []);
+  
+  useMessageFlow(messageFlow);  
+
   return (
-    <div className="max-w-3xl mx-auto p-4">
-      <h3 className="text-xl font-semibold mb-4">Items to Buy</h3>
-      <ul className="space-y-4">
-        {products.map((item) => (
-          <li
-            key={item.id}
-            className="flex items-center justify-between p-4 border rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200"
-          >
-            <span className="font-medium text-lg">{item.name}</span>
-            <span className="text-sm text-gray-500">
-              Quantity: {item.quantity}
-            </span>
-            <span className="text-sm text-gray-500">
-              Price: ${item.price.toFixed(2)}
-            </span>
-          </li>
-        ))}
-      </ul>
+    <div className="max-w-6xl mx-auto p-6">
+      <h3 className="text-3xl text-left font-semibold text-white mb-5">Items to Buy</h3>
+
+      {/* Filter Component */}
+      <FilterComponent onFilterChange={setFilters} />
+
+      {/* Filtered Product List */}
+      <ProductComponent products={filteredProducts} />
     </div>
   );
 };

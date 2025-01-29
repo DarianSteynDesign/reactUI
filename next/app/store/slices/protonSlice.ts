@@ -4,7 +4,8 @@ interface ProtonState {
   position: { x: number; y: number };
   state: "idle" | "moving" | "talking";
   bubbleText: string | null;
-  route: string | null;
+  chatBubblePostion: { x: number; y: number };
+  routeTo: string | null;
   showMenu: boolean | null;
 }
 
@@ -12,8 +13,9 @@ const initialState: ProtonState = {
   position: { x: 30, y: 30 },
   state: "idle",
   bubbleText: null,
-  route: null,
-  showMenu: false
+  chatBubblePostion: { x: 30, y: 30 },
+  routeTo: null,
+  showMenu: false,
 };
 
 const protonSlice = createSlice({
@@ -23,6 +25,8 @@ const protonSlice = createSlice({
     moveToAnchor(state, action: PayloadAction<{ x: number; y: number }>) {
       state.position = action.payload;
       state.state = "moving";
+      state.showMenu = false;
+      state.chatBubblePostion = { x: 0, y: -100 };
       console.log("Proton is moving -->", action.payload);
     },
     setIdle(state) {
@@ -37,18 +41,28 @@ const protonSlice = createSlice({
     clearBubble(state) {
       state.bubbleText = null;
       state.state = "idle";
+      state.routeTo = null;
       console.log("Proton has stopped talking -->", state);
     },
     setRoute(state, action: PayloadAction<string>) {
-      state.route = action.payload;
+      state.showMenu = false;
+      state.chatBubblePostion = { x: 0, y: -100 };
+      state.routeTo = action.payload;
     },
     resetProtonState() {
       console.log("Resetting Proton's state -->");
       return initialState;
     },
     toggleMenu(state, action: PayloadAction<boolean | undefined>) {
-      state.showMenu = action.payload !== undefined ? action.payload : !state.showMenu;
-    }    
+      state.showMenu =
+        action.payload !== undefined ? action.payload : !state.showMenu;
+    },
+    changeChatBoxPostion(
+      state,
+      action: PayloadAction<{ x: number; y: number }>
+    ) {
+      state.chatBubblePostion = action.payload;
+    },
   },
 });
 
@@ -68,5 +82,14 @@ export const moveToGridCell = (row: number, col: number) => {
   return null;
 };
 
-export const { moveToAnchor, setIdle, setTalking, clearBubble, setRoute, resetProtonState, toggleMenu } = protonSlice.actions;
+export const {
+  moveToAnchor,
+  setIdle,
+  setTalking,
+  clearBubble,
+  setRoute,
+  resetProtonState,
+  toggleMenu,
+  changeChatBoxPostion,
+} = protonSlice.actions;
 export default protonSlice.reducer;

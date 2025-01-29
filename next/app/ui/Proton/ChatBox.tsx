@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import styles from "./ChatBox.module.scss";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 const ChatBox = ({ text, route }: { text: string | null; route?: string }) => {
   const [displayedText, setDisplayedText] = useState("");
   const [isTyping, setIsTyping] = useState(true);
+  const { chatBubblePostion } = useSelector(
+    (state: RootState) => state.proton
+  );
 
   useEffect(() => {
     if (text === null) return;
@@ -30,7 +35,12 @@ const ChatBox = ({ text, route }: { text: string | null; route?: string }) => {
   }, [text]);
 
   return (
-    <div className={styles.wrapper}>
+    <div 
+      className={styles.wrapper}
+      style={{
+        transform: `translate(${chatBubblePostion.x}%, ${chatBubblePostion.y}%)`
+      }}
+      >
       <div className={styles.typing_container}>
         <span className={styles.typing_text}>{displayedText}</span>
         {isTyping && <span className={styles.blinking_cursor}>|</span>}
