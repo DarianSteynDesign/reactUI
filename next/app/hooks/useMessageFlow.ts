@@ -7,6 +7,7 @@ import {
   moveToAnchor,
   moveToGridCell,
   setIdle,
+  changeChatBoxPostion,
 } from "../store/slices/protonSlice";
 
 interface Message {
@@ -16,6 +17,7 @@ interface Message {
   route?: string;
   clearAfterDelay?: boolean;
   shouldTriggerIdle?: boolean;
+  chatBubblePostion?: { x: number; y: number };
 }
 
 export const useMessageFlow = (messages: Message[]) => {
@@ -38,7 +40,7 @@ export const useMessageFlow = (messages: Message[]) => {
       try {
         dispatch(clearBubble());
         
-        for (const { text, position, delayTime, route, clearAfterDelay, shouldTriggerIdle } of messages) {
+        for (const { text, position, delayTime, route, clearAfterDelay, shouldTriggerIdle, chatBubblePostion } of messages) {
           if (signal.aborted) break;
 
           if (position) {
@@ -46,6 +48,10 @@ export const useMessageFlow = (messages: Message[]) => {
             if (gridPosition) {
               dispatch(moveToAnchor(gridPosition));
             }
+          }
+
+          if (chatBubblePostion) {
+            dispatch(changeChatBoxPostion(chatBubblePostion));
           }
 
           dispatch(setTalking(text));
