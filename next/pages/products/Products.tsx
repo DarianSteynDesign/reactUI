@@ -34,7 +34,7 @@ export function ProductComponent({ products }: ProductComponentProps) {
   );
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
+    <div className="max-w-6xl mx-auto pt-5">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {products.length > 0 ? (
           products.map((item) => (
@@ -49,9 +49,16 @@ export function ProductComponent({ products }: ProductComponentProps) {
                 className="w-full h-40 object-cover rounded-md mb-4"
               />
 
-              {/* Product Info */}
-              <h2 className="text-white text-lg font-semibold">{item.name}</h2>
-              <p className="text-gray-400 text-sm">{item.type}</p>
+              <div className="flex">
+                <div className="flex flex-col">
+                  {/* Product Info */}
+                  <h2 className="text-white text-lg font-semibold">{item.name}</h2>
+                  <p className="text-gray-400 text-sm">{item.type}</p>
+                </div>
+
+                {/* Price */}
+                <p className="text-white font-bold text-lg mt-2 ml-auto">${item.price.toFixed(2)}</p>
+              </div>
               
               {/* Rating */}
               <div className="flex items-center space-x-1 mt-2">
@@ -62,20 +69,17 @@ export function ProductComponent({ products }: ProductComponentProps) {
                 ))}
               </div>
 
-              {/* Price */}
-              <p className="text-blue-400 font-bold text-lg mt-2">${item.price.toFixed(2)}</p>
-
               {/* Add to Cart */}
               <div className="flex justify-between mt-3">
                 <button
                   onClick={() => handleAddItem(item.id, item.name, item.price)}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+                  className="px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition"
                 >
                   Add to Cart
                 </button>
                 <button
                   onClick={() => handleRemoveItem(item.id)}
-                  className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
+                  className="px-4 py-2 border-white border-2 text-white rounded-full hover:bg-white hover:text-blue-600 transition"
                 >
                   Remove
                 </button>

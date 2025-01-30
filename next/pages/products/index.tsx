@@ -42,7 +42,6 @@ const Products = ({ products }: ProductsProps) => {
 
   // Apply filters
   const filteredProducts = products.filter((product) => {
-    console.log(product.type, filters.type);
     return (
       (filters.type === undefined || filters.type === "" || product.type === filters.type) &&
       (filters.price === undefined || product.price <= filters.price) &&
@@ -68,8 +67,8 @@ const Products = ({ products }: ProductsProps) => {
   useMessageFlow(messageFlow);  
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
-      <h3 className="text-3xl text-left font-semibold text-white mb-5">Items to Buy</h3>
+    <div className="max-w-6xl mx-auto pt-5">
+      <h3 className="text-3xl text-left font-semibold text-white mb-5">Products</h3>
 
       {/* Filter Component */}
       <FilterComponent onFilterChange={setFilters} />

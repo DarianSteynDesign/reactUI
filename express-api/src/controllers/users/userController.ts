@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { connectUsers } from '../../repository/mongoConnection';
 import { Collection, ObjectId } from 'mongodb';
+import jwt from 'jsonwebtoken';
 
 export const getUsers = async (req: Request, res: Response) => {
   try {
@@ -38,6 +39,21 @@ export const userGetCart = async (req: any, res: Response) => {
   }
 };
 
+export const getUserByToken = async (req: any, res: Response) => {
+  const token = req.cookies["auth-token"];
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized - No Token" });
+  }
+
+  try {
+    const secret = process.env.JWT_SECRET || "my-secret-key";
+    const decoded = jwt.verify(token, secret) as { userId: string; email: string };
+    console.log(decoded);
+    return res.json({ id: decoded.userId, email: decoded.email });
+  } catch (error) {
+    return res.status(401).json({ message: "Unauthorized - Invalid Token" });
+  }
+};
 
 export const userAddToCart = async (req: any, res: Response) => {
   const { cart } = req.body;

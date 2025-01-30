@@ -3,9 +3,9 @@ import cors from "cors";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { connectUsers } from "./repository/mongoConnection";
-import { getUsers, userAddToCart, userGetCart } from './controllers/users/userController';
+import { getUserByToken, getUsers, userAddToCart, userGetCart } from './controllers/users/userController';
 import { login, signup, verifyToken } from './controllers/users/authController';
-import { incrementLike } from "./controllers/users/postController";
+import { createPost, incrementLike } from "./controllers/users/postController";
 import cookieParser from 'cookie-parser';
 
 //Server init
@@ -54,6 +54,8 @@ app.post('/api/login', login);
 
 app.post('/api/verify-token', verifyToken);
 
+app.post('/api/createPost', createPost);
+
 //GET
 app.get('/api/protected', authenticateToken, (req: any, res: Response) => {
   res.json({ message: 'This is a protected route', user: req.user });
@@ -62,6 +64,8 @@ app.get('/api/protected', authenticateToken, (req: any, res: Response) => {
 app.get('/api/users', getUsers);
 
 app.get('/api/cart', authenticateToken, userGetCart);
+
+app.get("/api/user", getUserByToken);
 
 //PUT
 

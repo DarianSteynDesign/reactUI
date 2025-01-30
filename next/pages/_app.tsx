@@ -6,6 +6,7 @@ import store from "../app/store/store";
 import AnchorGrid from "../app/ui/AnchorGrid/AnchorGrid";
 import Proton from "../app/ui/Proton/Proton";
 import LogoComponent from "../app/ui/Logo";
+import { UserProvider } from "../context/UserContext";
 
 const queryClient = new QueryClient();
 
@@ -14,10 +15,12 @@ export default function App({ Component, pageProps }) {
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider>
-          <Component {...pageProps} />
-          <AnchorGrid rows={5} cols={5} />
-          <Proton />
-          <LogoComponent />
+          <UserProvider>
+            <Component {...pageProps} />
+            <AnchorGrid rows={5} cols={5} />
+            <Proton />
+            <LogoComponent />
+          </UserProvider>
         </ThemeProvider>
       </QueryClientProvider>
     </Provider>

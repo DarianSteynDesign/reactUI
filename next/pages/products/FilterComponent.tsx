@@ -9,8 +9,7 @@ const FilterComponent: React.FC<FilterProps> = ({ onFilterChange }) => {
   const [rating, setRating] = useState<number | undefined>();
   const [type, setType] = useState<string | undefined>();
 
-  //Good example of needing to wait for changes in values before calling the onFilterChange function. 
-  // #State race conditions
+  //Good example of needing to wait for changes in values before calling the onFilterChange function. #State race conditions
   useEffect(() => {
     onFilterChange({ price, rating, type });
   }, [price, rating, type, onFilterChange]);

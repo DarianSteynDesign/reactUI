@@ -45,7 +45,7 @@ const Proton = () => {
         {bubbleText && <ChatBox text={bubbleText} route={routeTo ?? undefined} />}
       </AnimatePresence>
 
-      {showMenu && router.pathname == "/products" && <Cart />}
+      {router.pathname == "/products" && <Cart />}
 
       {showMenu && router.pathname == "/dashboard" && (
         <ThemeButton onThemeChange={changeTheme} />

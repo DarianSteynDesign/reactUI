@@ -3,6 +3,33 @@ import { connectPosts } from '../../repository/mongoConnection';
 import { ObjectId } from 'mongodb';
 import { Request } from 'express';
 
+export const createPost = async (req: Request, res: Response) => {
+  const { text, image, userId } = req.body;
+
+  try {    
+    const collection = await connectPosts();
+    
+    const newPost = {
+      userId,
+      text,
+      image, 
+      createdAt: new Date(),
+      likes: 0
+    };
+
+    const result = await collection.insertOne(newPost);
+    
+    if (!result.acknowledged) {
+      return res.status(400).json({ message: "Failed to create post" });
+    }
+
+    res.status(201).json({ _id: result.insertedId, ...newPost });
+  } catch (error: any) {
+    res.status(500).json({ message: "Error creating post", error: error.message });
+  }
+};
+
+
 export const incrementLike = async (req: Request, res: Response) => {
   const { postId } = req.body;
 
