@@ -24,22 +24,20 @@ export const getStaticProps = async () => {
 
 const FeedPage = ({ posts }: { posts: Post[] }) => {
   const { user } = useUser();
-  const [showMyFeed, setShowMyFeed] = useState(false); // State to toggle between feeds
-  const [filteredPosts, setFilteredPosts] = useState<Post[]>(posts); // Store filtered posts here
+  const [showMyFeed, setShowMyFeed] = useState(false);
+  const [filteredPosts, setFilteredPosts] = useState<Post[]>(posts);
 
-  // Filter posts based on userId
   const filterPosts = (posts: Post[]) => {
-    console.log("Filtering posts based on user id:", user?.id); // Debug
+    console.log("Filtering posts based on user id:", user?.id);
     return posts.filter((post) => post.userId === user?.id);
   };
 
-  // Button click handlers
   const handleFeedClick = () => {
-    setShowMyFeed(false); // Set to false to show all posts
+    setShowMyFeed(false);
   };
 
   const handleMyFeedClick = () => {
-    setShowMyFeed(true); // Set to true to show only the filtered posts
+    setShowMyFeed(true);
   };
 
   useEffect(() => {
@@ -48,10 +46,7 @@ const FeedPage = ({ posts }: { posts: Post[] }) => {
       const newFilteredPosts = filterPosts(posts);
       setFilteredPosts(newFilteredPosts);
     }
-  }, [user, posts]); // Re-run the effect if `user` or `posts` change
-
-  console.log("Posts:", posts); // Debug
-  console.log("Filtered Posts:", filteredPosts); // Debug
+  }, [user, posts]);
 
   return (
     <div className="flex flex-col">
